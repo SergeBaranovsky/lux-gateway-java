@@ -1,0 +1,12 @@
+// Generate RSA private key
+c:\tools\openssl\bin\openssl.exe genrsa -out keyp
+air.pem 2048
+
+// Extract public key
+c:\tools\openssl\bin\openssl.exe rsa -in keypair.
+pem -pubout -out public.pem
+
+// Generate private key
+c:\tools\openssl\bin\openssl.exe pkcs8 -topk8 -inform PEM -outform PEM -nocrypt -in keypair.pem -out private.pem
+
+

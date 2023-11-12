@@ -1,0 +1,46 @@
+$headers=@{}
+$headers.Add("Authorization", "Basic dXNlcjE6cGFzc3dvcmQ=")
+$token = Invoke-WebRequest -Uri 'http://localhost:8080/token' -Method POST -Headers $headers
+Write-Host $token
+read-host "Press ENTER to continue..."
+
+$headers=@{}
+$headers.Add("Content-Type", "application/json")
+$headers.Add("Authorization", "Bearer $token")
+$response = Invoke-WebRequest -Uri 'http://localhost:8080/foo?=' -Method POST -Headers $headers -ContentType 'application/json' -Body '{
+        "message": "This is the input message."
+}'
+Write-Host $response
+
+
+# Invalid user credentials
+
+$invalidateauth = "123"
+$headers=@{}
+$headers.Add("Authorization", "Basic dXNlcjE6cGFzc3dvcmQ=$invalidateauth")
+try {
+    $token = Invoke-WebRequest -Uri 'http://localhost:8080/token' -Method POST -Headers $headers
+    Write-Host $token
+} catch {
+    Write-Host "Invalid user login info."
+    Write-Host "StatusCode:" $_.Exception.Response.StatusCode.value__
+    Write-Host "StatusDescription:" $_.Exception.Response.StatusDescription
+}
+
+
+# Unauthorized with expired token
+$token = "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoidXNlcjEiLCJleHAiOjE2OTk4MTg5NjcsImlhdCI6MTY5OTgxNTM2Nywic2NvcGUiOiJST0xFX1JFQUQifQ.z
+6emIKYBCvoDQ72ai40zO-QFObOz-0zENcsxVJEYhylkYXuEsaz_Dz_BxUZBj-SZnXh5v_uRYaUQ1"
+$headers=@{}
+$headers.Add("Content-Type", "application/json")
+$headers.Add("Authorization", "Bearer $token")
+try {
+    $response = Invoke-WebRequest -Uri 'http://localhost:8080/foo?=' -Method POST -Headers $headers -ContentType 'application/json' -Body '{
+        "message": "This is the input message."
+    }'
+    Write-Host $response
+} catch {
+    Write-Host "Endpoint Call Failed."
+    Write-Host "StatusCode:" $_.Exception.Response.StatusCode.value__
+    Write-Host "StatusDescription:" $_.Exception.Response.StatusDescription
+}
