@@ -42,14 +42,7 @@ public class ScgPreFilterLogging extends AbstractGatewayFilterFactory<ScgPreFilt
     }
 
     public static class Config {
-        private String name;
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
+        // ... we don't need fields/properties for this implementation
     }
+
 }

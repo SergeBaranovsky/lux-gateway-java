@@ -22,7 +22,7 @@ spring:
             - Path=/token
   main:
     banner-mode: off
-    log-startup-info: false
+    log-startup-info: true
 
 logging:
   level:
@@ -33,13 +33,14 @@ logging:
     org.springframework.cloud.context.scope: OFF
     reactor.netty.http.client: OFF
     com.sergeb.luxgatewayjava.filters: INFO
-#  pattern:
-#    console: %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n
-#    file: %d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36}.%M - %msg%n
+  pattern:
+    console: '%d{HH:mm:ss.SSS} %highlight(%-5level) : %msg%n - %magenta([%thread]) %logger.%M'
+    file: '%d{yyyy-MM-dd HH:mm:ss} %-5level : %msg%n - [%thread] %logger{36}.%M'
   file:
-#    name: %d{yyyyMMdd}-gateway.log
-    name: gateway.log
-    path: c:/temp/GatewayLogs/
+    name: "gateway.log"
+    path: "c:\\temp\\GatewayLogs"
 rsa:
   private-key: classpath:certs/private.pem
   public-key: classpath:certs/public.pem
+server:
+  port: 8800

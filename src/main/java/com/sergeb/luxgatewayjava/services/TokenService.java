@@ -1,6 +1,5 @@
 package com.sergeb.luxgatewayjava.services;
 
-import com.sergeb.luxgatewayjava.filters.ScgGlobalFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -17,7 +16,7 @@ import java.util.stream.Collectors;
 @Service
 public class TokenService {
     private final JwtEncoder encoder;
-    private static final Logger log = LoggerFactory.getLogger(ScgGlobalFilter.class);
+    private static final Logger log = LoggerFactory.getLogger(TokenService.class);
 
     public TokenService(JwtEncoder encoder) {
         this.encoder = encoder;
